@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\DepositLimits;
-use App\Withdrawal;
+use App\Http\Middleware\WithdrawalLimits;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -59,6 +59,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'deposit-limit' => DepositLimits::class,
-        'withdrawal-limit' => Withdrawal::class
+        'withdrawal-limit' => WithdrawalLimits::class
     ];
 }

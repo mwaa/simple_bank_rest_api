@@ -22,3 +22,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+// Factory for Deposit Model
+$factory->define(App\Deposit::class, function(Faker\Generator $faker) {
+    return [
+        'bank_account_id' => 1,
+        'amount' => $faker->randomFloat(2, 4000, 50000),
+        'reason' => $faker->word
+    ];
+});
+
+// Factory for Withdrawal Model
+$factory->define(App\Withdrawal::class, function(Faker\Generator $faker) {
+    return [
+        'bank_account_id' => 1,
+        'amount' => $faker->randomFloat(2, 4000, 50000),
+        'reason' => $faker->word
+    ];
+});

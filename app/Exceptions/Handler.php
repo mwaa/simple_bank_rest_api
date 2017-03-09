@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\Debug\Exception\FlattenException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +46,23 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+
+    /**
+     * Return json response for all exceptions within application
+     * @param Exception $e
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function convertExceptionToResponse(Exception $e)
+    {
+        \Log::error($e); // Record error on the logs file
+        $e = FlattenException::create($e);
+
+        return response()->json([
+            'code' => $e->getStatusCode(),
+            'message' => $e->getMessage()
+        ], $e->getStatusCode(), $e->getHeaders());
     }
 
     /**

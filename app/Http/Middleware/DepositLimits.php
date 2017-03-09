@@ -22,7 +22,7 @@ class DepositLimits
             abort(403, "Exceeded maximum deposit amount per transaction");
         }
 
-        $deposits = Deposit::whereRaw('Date(created_at) = CURDATE()')->get();
+        $deposits = Deposit::whereRaw('date(created_at) = ?', date('Y-m-d'))->get();
 
         // Max deposit frequency = 4 transactions/day
         if ($deposits->count() == 4) {

@@ -13,4 +13,4 @@
 
 Route::get('balance', 'BankController@balance');
 Route::middleware('deposit-limit')->post('/deposit', 'BankController@deposit');
-Route::middleware('withdraw-limit')->post('/withdraw', 'BankController@withdraw');
+Route::middleware('withdrawal-limit')->post('/withdraw', 'BankController@withdraw');

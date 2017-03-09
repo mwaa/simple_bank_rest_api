@@ -16,13 +16,13 @@ class WithdrawalLimits
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {        
+    {
         // Max withdrawal per transaction = $20K
         if($request->amount > 20000) {
             abort(403, "Exceeded maximum withdrawal amount per transaction");
         }
 
-        $withdrawals = Withdrawal::whereRaw('Date(created_at) = CURDATE()')->get();
+        $withdrawals = Withdrawal::whereRaw('Date(created_at) = ?', date('Y-m-d'))->get();
 
         // Max withdrawal frequency = 3 transactions/day
         if ($withdrawals->count() == 3) {
@@ -36,7 +36,7 @@ class WithdrawalLimits
         
         $dailyTotal += $request->amount;
         // Max withdrawal for the day = $50K    
-        if ($dailyTotal > 150000) {
+        if ($dailyTotal > 50000) {
             abort(403, "Exceeded maximum withdrawal amount per day");
         }
 
